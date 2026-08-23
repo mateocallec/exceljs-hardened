@@ -1,17 +1,25 @@
 {
-  "name": "exceljs",
-  "version": "4.4.0",
-  "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
+  "name": "exceljs-hardened",
+  "version": "4.4.1",
+  "description": "Unofficial security-hardened fork of exceljs, patching known unpatched vulnerabilities in the upstream (unmaintained) project. Not affiliated with the original exceljs maintainers.",
   "private": false,
   "license": "MIT",
-  "author": {
-    "name": "Guyon Roche",
-    "email": "guyon@live.com"
-  },
+  "author": "callec.mateo@gmail.com",
+  "contributors": [
+    {
+      "name": "Guyon Roche",
+      "email": "guyon@live.com",
+      "note": "original exceljs author — not involved in this fork's security patches"
+    }
+  ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/exceljs/exceljs.git"
+    "url": "https://github.com/TODO-SET-YOUR-GITHUB-USERNAME/exceljs-hardened.git"
   },
+  "bugs": {
+    "url": "https://github.com/TODO-SET-YOUR-GITHUB-USERNAME/exceljs-hardened/issues"
+  },
+  "homepage": "https://github.com/TODO-SET-YOUR-GITHUB-USERNAME/exceljs-hardened#readme",
   "engines": {
     "node": ">=8.3.0"
   },
@@ -93,7 +101,10 @@
     "views",
     "frozen",
     "split",
-    "pageSetup"
+    "pageSetup",
+    "security",
+    "hardened",
+    "patched"
   ],
   "dependencies": {
     "archiver": "^5.0.0",
