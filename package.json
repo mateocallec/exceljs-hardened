@@ -4,7 +4,7 @@
   "description": "Unofficial security-hardened fork of exceljs, patching known unpatched vulnerabilities in the upstream (unmaintained) project. Not affiliated with the original exceljs maintainers.",
   "private": false,
   "license": "MIT",
-  "author": "callec.mateo@gmail.com",
+  "author": "mateo@callec.net",
   "contributors": [
     {
       "name": "Guyon Roche",
@@ -14,12 +14,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/TODO-SET-YOUR-GITHUB-USERNAME/exceljs-hardened.git"
+    "url": "https://github.com/mateocallec/exceljs-hardened.git"
   },
   "bugs": {
-    "url": "https://github.com/TODO-SET-YOUR-GITHUB-USERNAME/exceljs-hardened/issues"
+    "url": "https://github.com/mateocallec/exceljs-hardened/issues"
   },
-  "homepage": "https://github.com/TODO-SET-YOUR-GITHUB-USERNAME/exceljs-hardened#readme",
+  "homepage": "https://github.com/mateocallec/exceljs-hardened#readme",
   "engines": {
     "node": ">=8.3.0"
   },
