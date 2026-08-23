@@ -27,10 +27,16 @@ different package name so they don't collide with the official one on npm.
 
 | ID | Vulnerability | Fixed in | Status |
 |---|---|---|---|
-| VULN-01 | Prototype pollution in `_.deepMerge()` (`lib/utils/under-dash.js`) | `4.4.1` | ✅ Patched |
-| VULN-02 | Arbitrary local file read via `addImage({filename})` (`lib/doc/workbook.js`, `lib/xlsx/xlsx.js`) | `4.4.1` | ✅ Patched |
-| VULN-04 | Decompression bomb / memory exhaustion in `Workbook#load()` (`lib/xlsx/xlsx.js`) | `4.4.1` | ✅ Patched |
-| VULN-03 | CSV / formula injection in `CSV.write()` (`lib/csv/csv.js`) | — | ⏳ Not yet patched in this fork |
+| VULN-01 | Prototype pollution in `_.deepMerge()` (`lib/utils/under-dash.js`) | `5.0.0` | ✅ Patched |
+| VULN-02 | Arbitrary local file read via `addImage({filename})` (`lib/doc/workbook.js`, `lib/xlsx/xlsx.js`) | `5.0.0` | ✅ Patched |
+| VULN-03 | CSV / formula injection in `CSV.write()` (`lib/csv/csv.js`) | `5.0.0` | ✅ Patched |
+| VULN-04 | Decompression bomb / memory exhaustion in `Workbook#load()` (`lib/xlsx/xlsx.js`) | `5.0.0` | ✅ Patched |
+
+All four issues identified in the original audit are now patched and
+verified against live proof-of-concept exploits (see
+[`../../poc/exceljs`](../../poc/exceljs) — the same PoC tools that
+demonstrated each vulnerability were re-run against a demo app wired to
+this fork to confirm the fixes hold).
 
 See [`SECURITY.md`](./SECURITY.md) for how to report new issues, and each
 patch's inline `[exceljs-hardened]` comments in the source for the
@@ -102,6 +108,32 @@ await workbook.xlsx.load(buffer, {
 });
 ```
 
+### VULN-03 — CSV / formula injection
+
+`CSV.write()` now prefixes any value beginning with `=`, `+`, `-`, `@`,
+tab, or CR with a leading apostrophe before handing it to `fast-csv`.
+Every mainstream spreadsheet application treats a leading `'` as "force
+this cell to be text" — the apostrophe itself isn't shown, so the cell
+still displays exactly as written, it just never gets evaluated as a
+formula.
+
+```js
+const rows = [['Item', '=cmd|"/c calc"!A0']];
+rows.forEach(r => sheet.addRow(r));
+await workbook.csv.writeBuffer();
+// -> Item,'=cmd|"/c calc"!A0
+//    (the payload is now inert text, not a live formula)
+```
+
+This is applied to the *default* mapper and to any custom `options.map`
+you supply — the wrapping happens after your mapper runs, so it protects
+custom export logic too. If you need the raw, unescaped behavior (e.g. a
+purely numeric export you've already validated), opt out explicitly:
+
+```js
+await workbook.csv.writeBuffer({escapeFormulas: false});
+```
+
 ## Installing
 
 ```bash
@@ -121,11 +153,30 @@ drop-in replacement:
 - It does not track every upstream change — it starts from `exceljs@4.4.0`
   plus the specific security patches above. If upstream ever becomes
   active again, migrating back to the official package is recommended.
-- It does not patch VULN-03 (CSV/formula injection) yet — that fix
-  requires a decision about default behavior (escaping vs. an opt-in
-  flag) that's still being worked out. Track it in this repo's issues.
 - It makes no claim of a full, independent security audit beyond the
-  issues listed above.
+  four issues listed above.
+
+## Upgrading from `4.x`
+
+`5.0.0` deliberately breaks a few edge cases that upstream `4.4.0` used
+to allow silently, because those edge cases were the exploitable
+behavior:
+
+- `addImage({filename})` now throws on a raw path containing `..`, and
+  `Workbook.utils.safeJoin()` (new) is the supported way to build such a
+  path from user input — see the VULN-02 section above.
+- `Workbook#load()` now throws by default on any zip entry declaring
+  more than 128MB uncompressed, or an archive totalling more than 512MB
+  — both configurable via `options.maxEntryUncompressedSize` /
+  `options.maxTotalUncompressedSize` if your legitimate files are larger.
+- `CSV.write()` now prefixes formula-trigger characters with `'` by
+  default — opt out per-call with `{escapeFormulas: false}` if you rely
+  on the raw output.
+
+If you hit one of these in an existing app, it means the input in
+question matches the exact shape that was exploitable — that's the
+point. Adjust the input, raise the relevant limit deliberately, or opt
+out for that call site if you've already validated it's safe.
 
 ## License
 
