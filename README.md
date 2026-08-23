@@ -1,15 +1,16 @@
 # exceljs-hardened
 
-**This is an unofficial, unaffiliated fork of [exceljs](https://github.com/exceljs/exceljs).**
-It exists to maintain the security of a widely-used library whose upstream
-appears unmaintained: no response channel currently works (Discord is
-gone, GitHub private vulnerability reporting is disabled on the upstream
-repo), and several real vulnerabilities have gone unpatched as a result.
-
-This fork is **not** endorsed by, and has no relationship with, the
-original exceljs maintainers. It is not a general-purpose continuation of
-the project — it exists specifically to carry security fixes for
-known, reported issues that upstream cannot currently receive.
+> [!WARNING]
+> **This is an unofficial, unaffiliated fork of [exceljs](https://github.com/exceljs/exceljs).**
+> It exists to maintain the security of a widely-used library whose upstream
+> appears unmaintained: no response channel currently works (Discord is
+> gone, GitHub private vulnerability reporting is disabled on the upstream
+> repo), and several real vulnerabilities have gone unpatched as a result.
+>
+> This fork is **not** endorsed by, and has no relationship with, the
+> original exceljs maintainers. It is not a general-purpose continuation of
+> the project — it exists specifically to carry security fixes for
+> known, reported issues that upstream cannot currently receive.
 
 ## Why this exists
 
