@@ -102,14 +102,14 @@ describe('hardening regression: names that collide with Object.prototype members
   // --- known pre-existing bugs, to be enabled once the VULN-01 patch lands ---
   describe('KNOWN BUG (enable after VULN-01 fix)', () => {
     BROKEN_FOR_DEFINED_NAMES.forEach(n => {
-      it.skip(`defined name on a sheet called "${n}" survives a round-trip`, async () => {
+      it(`defined name on a sheet called "${n}" survives a round-trip`, async () => {
         const wb = new ExcelJS.Workbook();
         wb.addWorksheet(n).getCell('A1').value = 1;
         wb.definedNames.add(`'${n}'!$A$1:$A$3`, 'nm');
         const wb2 = await roundTrip(wb);
         expect(wb2.definedNames.getRanges('nm').ranges).to.have.length(1);
       });
-      it.skip(`a defined name called "${n}" can be added and round-trips`, async () => {
+      it(`a defined name called "${n}" can be added and round-trips`, async () => {
         const wb = new ExcelJS.Workbook();
         wb.addWorksheet('S');
         wb.definedNames.add('S!$B$2', n);
