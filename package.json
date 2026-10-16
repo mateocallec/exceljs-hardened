@@ -1,6 +1,6 @@
 {
   "name": "exceljs-hardened",
-  "version": "5.1.0",
+  "version": "5.0.2",
   "description": "Unofficial security-hardened fork of exceljs, patching known unpatched vulnerabilities in the upstream (unmaintained) project. Not affiliated with the original exceljs maintainers.",
   "private": false,
   "license": "MIT",
