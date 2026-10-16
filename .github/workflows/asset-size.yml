@@ -2,16 +2,21 @@ name: Asset size
 
 on: [pull_request]
 
+# [exceljs-hardened] VULN-15: least privilege (the default token may be read/write on older repos)
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   compare:
     timeout-minutes: 15
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4, same pin as tests.yml
         with:
           fetch-depth: 0
-      - uses: chrysanthos/simple-asset-size-reporter@1.0.2
+      - uses: chrysanthos/simple-asset-size-reporter@3c86a594c400b40a4ebe6418da605a5d2755ef52 # 1.0.2
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           files: '["dist/*.js"]'

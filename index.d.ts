@@ -1476,6 +1476,27 @@ export interface XlsxReadOptions {
 	 * @default 536870912 (512MB)
 	 */
 	maxTotalUncompressedSize: number;
+	/**
+	 * [exceljs-hardened] CVE fix — resource exhaustion (CWE-770). Maximum number of
+	 * cells covered by the merged ranges of a single worksheet before load() refuses
+	 * the file. A whole column (1048576 cells) is allowed by default.
+	 * @default 2097152
+	 */
+	maxMergeCells: number;
+	/**
+	 * [exceljs-hardened] CVE fix — resource exhaustion (CWE-770). Maximum number of
+	 * cells covered by the data validation ranges (sqref) of a single worksheet
+	 * before load() refuses the file.
+	 * @default 8388608
+	 */
+	maxDataValidationCells: number;
+	/**
+	 * [exceljs-hardened] CVE fix — resource exhaustion (CWE-770). Maximum number of
+	 * cells covered by the cell ranges of all defined names of a workbook before
+	 * load() refuses the file. A whole column (1048576 cells) is allowed by default.
+	 * @default 2097152
+	 */
+	maxDefinedNameCells: number;
 }
 
 export interface XlsxWriteOptions extends stream.xlsx.WorkbookWriterOptions {
@@ -2033,6 +2054,16 @@ export namespace stream {
 			 * @default 'ignore'
 			 */
 			entries?: 'emit' | 'ignore';
+			/**
+			 * [exceljs-hardened] Opt-in (no default: this reader is meant for very large files).
+			 * Maximum REAL decompressed size, in bytes, of any single zip entry.
+			 */
+			maxEntryUncompressedSize?: number;
+			/**
+			 * [exceljs-hardened] Opt-in (no default: this reader is meant for very large files).
+			 * Maximum REAL cumulative decompressed size, in bytes, across all zip entries.
+			 */
+			maxTotalUncompressedSize?: number;
 		}
 
 		class WorkbookReader extends Workbook {
