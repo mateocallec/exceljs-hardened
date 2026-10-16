@@ -5,6 +5,25 @@ starts from upstream `exceljs@4.4.0`; see the
 [upstream changelog](https://github.com/exceljs/exceljs) for history
 before that point.
 
+## 5.1.0 — Important security release
+
+### Fix
+
+- 25 application vulnerabilities patched
+- Vulnerable dependencies have been updated or removed
+
+## 5.0.2
+
+### Fix
+
+- Fixing missing `dist/` folder in v5.0.1
+
+## 5.0.1
+
+### Fix
+
+- Bump archiver to ^8 to remove vulnerable transitive minimatch (CVE-2026-27904) in https://github.com/mateocallec/exceljs-hardened/pull/1
+
 ## 5.0.0 — Security hardening release
 
 First release of this fork. Patches all four vulnerabilities identified

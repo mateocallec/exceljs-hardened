@@ -10,7 +10,7 @@ vulnerability reports. This document describes how to report issues
 
 | Version | Supported |
 |---|---|
-| 4.4.x (latest) | ✅ |
+| 5.1.0 (latest) | ✅ |
 | < 4.4.1 | ❌ |
 
 Only the latest published version receives security fixes. There is no
