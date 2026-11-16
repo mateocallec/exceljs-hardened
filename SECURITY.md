@@ -10,7 +10,8 @@ vulnerability reports. This document describes how to report issues
 
 | Version | Supported |
 |---|---|
-| 5.1.0 (latest) | ✅ |
+| 5.1.1 (latest) | ✅ |
+| 5.1.0 | ⚠️ same code, but its tag and npm `gitHead` do not identify the source — upgrade to 5.1.1 |
 | < 4.4.1 | ❌ |
 
 Only the latest published version receives security fixes. There is no

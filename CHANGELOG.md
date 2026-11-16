@@ -5,6 +5,16 @@ starts from upstream `exceljs@4.4.0`; see the
 [upstream changelog](https://github.com/exceljs/exceljs) for history
 before that point.
 
+## 5.1.1
+
+### Fix
+
+- Release provenance: `package.json` of the tagged source now reads the real
+  version (the `v5.1.0` tag carried `5.0.2` after a merge conflict, and the
+  npm `gitHead` of 5.1.0 pointed to a commit predating the fix). The code is
+  identical to 5.1.0. `prepublishOnly` now refuses to publish from a dirty
+  tree or an untagged HEAD.
+
 ## 5.1.0 — Important security release
 
 ### Fix
